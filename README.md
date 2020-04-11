@@ -22,6 +22,7 @@ In order to understand the correlation of each features to the sale price, a hea
 Final qualitative features:
 Total of 19
 
+feature|feature|feature|feature|feature
 |---|---|---|---|---|
 age_house|age_garg|age_rem|lot_area|wood_deck_sf
 open_porch_sf|lot_frontage|bsmtfin_sf_1|fireplaces|totrms_abvgrd
@@ -63,6 +64,7 @@ Wide range of price variation.
 Final qualitative features:
 Total of 21
 
+feature|feature|feature|feature|feature
 |---|---|---|---|---|
 ms_zoning|street|lot_shape|land_contour|utilities
 condition_2|bldg_type|house_style|roof_matl|mas_vnr_type
@@ -99,7 +101,7 @@ Linear Regression|0.914|0.856|23.83K
 Ridge|0.954|0.911|23.80K
 LassCV|0.947|0.920|23.28K
 
-The scores from the 3 regression, 2 of which had regularization, were fairly closed with slight overfit. Ridge and LassCV was able to adjust slightly and improved kaggle score by 1% to 2%.
+The scores from the 3 regression, 2 of which had regularization, were fairly closed with slight overfit. Ridge and LassCV was able to slightly adjust and improved kaggle score by 1% to 2%.
 
 ## Conclusion
 
