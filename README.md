@@ -20,6 +20,7 @@ In order to understand the correlation of each feature to the sale price, a heat
 ![](./images/heat_prj_2.png)
 
 Final qualitative features:
+
 Total of 19
 
 feature|feature|feature|feature|feature
@@ -64,6 +65,7 @@ Wide range of price variation.
 
 
 Final qualitative features:
+
 Total of 21
 
 feature|feature|feature|feature|feature
