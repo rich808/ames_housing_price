@@ -8,14 +8,14 @@ Given the housing data from 2006 - 2010 for the city of Ames in Iowa, analyze im
 
 ### 1) Data Cleaning
 
-At start, the datasets has total of 81 features. It consist of 38 quantatitve features, 40 qualitative features and 2 identification features given by its local government. Out of the total 81 features, not all of the 81 will have significant influence to the house price. Thus, the features will be filter to only containt the important features. 
+At start, the datasets has total of 81 features. It consist of 38 quantatitve features, 40 qualitative features and 2 identification features given by its local government. Out of the total 81 features, not all 81 will have significant influences to the house price. Thus, it will be filtered to only contain important features. 
 
 [Data Description](http://jse.amstat.org/v19n3/decock/DataDocumentation.txt)
 
 #### Qualitative
 
-Qualititative contains total of 38 features. Within the 38 features, it has 3 features that are related to years, year build, year of remodeling and year of garage. Those years were converted to age, relative to the year it was sold. 
-In order to understand the correlation of each features to the sale price, a heatmap was used and keep the features with correlatiion above 30%.
+Qualititative contains total of 38 features. Within the 38 features, it has 3 features that were related to years, year build, year of remodeling and year garage was built. Those years were converted to age, relative to the year it was sold. 
+In order to understand the correlation of each feature to the sale price, a heatmap was used. Only the features with correlatiion above 30% were kept for the model.
 
 ![](./images/heat_prj_2.png)
 
@@ -37,7 +37,7 @@ Each features were plotted on a scatter plots to check and remove outliers, like
 
 The datapoint on the left was remove beacause didn't make sense with -200 years old. 
 
-The final step for check for missing values. Since these features were qualitative, it should be a numeric. 
+The final step was to check for missing values. Since these features were qualitative, it must have some numeric values. 
 
 Finding:
 
@@ -49,8 +49,8 @@ lot_frontage|330
 
 #### Quantitative
 
-Quantitative consist of total 40 features. Each of these features has its own categorical values which had a influence to the sale price. 
-Since this is categorical value, missing values was possible. First step was to look at the features with most N/A, above 50% and remove them. 
+Quantitative consist of total 40 features. Each features has its own categorical values which had a influence to the sale price. 
+Since this was categorical value, missing values was possible. First step was to look at the features with most N/A and remove those with 50% or above.
 
 ![](./images/CateNull_bar.png)
 
@@ -59,7 +59,9 @@ Total of 5 features were removed.
 For the remaining features, a box plot was used on each features to show distribution of its categories and filter the features with good price variation, like the chart of neighborhood vs. saleprice.
 
 ![](./images/nei_box.png)
+
 Wide range of price variation. 
+
 
 Final qualitative features:
 Total of 21
@@ -80,16 +82,18 @@ exterior_2nd| | | |
 These two sets features were combined into one dataframe with total of 40 features. 
 
 1) Model varible setup:
-    X = 40 features
+
+    X = 40 features 
+    
     y = saleprice
 
-2) Each quantitatives features with converted to 1's and 0's with pd.get_dummies function. It resulted in total of 150 features.
+2) Each quantitatives feature was converted to 1's and 0's with pd.get_dummies function. It resulted in total of 150 features.
 
-3) saleprice was log_transformed to get a better distribution for model.
+3) saleprice was log_transformed for a better distribution for the model.
 
 ![](./images/sale_log_hist.png)
 
-4) X was split into 75/25 for training and testing dataset for check the model prediction. 
+4) X was split into 75/25 for training and testing dataset to check the model's prediction. 
 
 5) model X and y to Linear Regression, Ridge and Lasso for R2 scores on CV5 folds. 
 
@@ -101,11 +105,11 @@ Linear Regression|0.914|0.856|23.83K
 Ridge|0.954|0.911|23.80K
 LassCV|0.947|0.920|23.28K
 
-The scores from the 3 regression, 2 of which had regularization, were fairly closed with slight overfit. Ridge and LassCV was able to slightly adjust and improved kaggle score by 1% to 2%.
+The scores from 3 regression, 2 of which had regularization, were fairly closed with slight overfit. Ridge and LassCV was able to slightly adjust and improved kaggle score by 1% to 2%.
 
 ## Conclusion
 
-From the scores, the model is capable to predict house price when it is given information with its 40 features. But, the model is only valid with data from around 2006 to 2010 from Ames of Iowa, or similar economic conditiion similar to 2006-2010. If it is used beyond those conditions, the model will not yield good results and the model will need to be trained again. Thus, in order to improve the current model, it need to get feed with more data, iterate the features in differen ways and convert the categorical values to numeric value more effectively. 
+From the scores, the model is capable to predict house price when it is given information with its 40 features. But, the model is only valid with data from around 2006 to 2010 from Ames of Iowa, or similar economic condition to 2006-2010. If it is used beyond these conditions, the model will not yield good results and the model will need to be trained again. Thus, in order to improve the current model, it need to get fed with more data, iterate features in more ways and convert the categorical values to numeric value more effectively. 
 
 
 
