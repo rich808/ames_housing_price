@@ -1,183 +1,110 @@
-# Project 2 - Ames Housing Data and Kaggle Challenge
+# House Price prediction model using data from Ames, Iowa. 
 
-Welcome to Project 2! It's time to start modeling.
+## Problem Statement
 
-**Primary Learning Objectives:**
-1. Creating and iteratively refining a regression model
-2. Using [Kaggle](https://www.kaggle.com/) to practice the modeling process
-3. Providing business insights through reporting and presentation.
+Given the housing data from 2006 - 2010 for the city of Ames in Iowa, analyze important features that can influence house's worth and create a regression model to predict the house price at sale. Then, submit the house price for a kaggle score. 
 
-You are tasked with creating a regression model based on the Ames Housing Dataset. This model will predict the price of a house at sale.
+## Process
 
-The Ames Housing Dataset is an exceptionally detailed and robust dataset with over 70 columns of different features relating to houses.
+### 1) Data Cleaning
 
-Secondly, we are hosting a competition on Kaggle to give you the opportunity to practice the following skills:
+At start, the datasets has total of 81 features. It consist of 38 quantatitve features, 40 qualitative features and 2 identification features given by its local government. Out of the total 81 features, not all of the 81 will have significant influence to the house price. Thus, the features will be filter to only containt the important features. 
 
-- Refining models over time
-- Use of train-test split, cross-validation, and data with unknown values for the target to simulate the modeling process
-- The use of Kaggle as a place to practice data science
+[Data Description](http://jse.amstat.org/v19n3/decock/DataDocumentation.txt)
 
-As always, you will be submitting a technical report and a presentation. **You may find that the best model for Kaggle is not the best model to address your data science problem.**
+#### Qualitative
 
-## Set-up
+Qualititative contains total of 38 features. Within the 38 features, it has 3 features that are related to years, year build, year of remodeling and year of garage. Those years were converted to age, relative to the year it was sold. 
+In order to understand the correlation of each features to the sale price, a heatmap was used and keep the features with correlatiion above 30%.
 
-Before you begin working on this project, please do the following:
+![](./images/heat_prj_2.png)
 
-1. Sign up for an account on [Kaggle](https://www.kaggle.com/)
-2. **IMPORTANT**: Click this link ([Regression Challenge Sign Up](https://www.kaggle.com/t/2dde5663e03b4165b853ff65e723c26d)) to **join** the competition (otherwise you will not be able to make submissions!)
-3. Review the material on the [DSI-US-11 Regression Challenge](https://www.kaggle.com/c/dsi-us-11-project-2-regression-challenge)
-4. Review the [data description](http://jse.amstat.org/v19n3/decock/DataDocumentation.txt).
+Final qualitative features:
+Total of 19
 
-## The Modeling Process
+|---|---|---|---|---|
+age_house|age_garg|age_rem|lot_area|wood_deck_sf
+open_porch_sf|lot_frontage|bsmtfin_sf_1|fireplaces|totrms_abvgrd
+mas_vnr_area|full_bath|1st_flr_sf|total_bsmt_sf|garage_cars
+garage_area|gr_liv_area|overall_qual|saleprice
 
-1. The train dataset has all of the columns that you will need to generate and refine your models. The test dataset has all of those columns except for the target that you are trying to predict in your Regression model.
-2. Generate your regression model using the training data. We expect that within this process, you'll be making use of:
-    - train-test split
-    - cross-validation / grid searching for hyperparameters
-    - strong exploratory data analysis to question correlation and relationship across predictive variables
-    - code that reproducibly and consistently applies feature transformation (such as the preprocessing library)
-3. Predict the values for your target column in the test dataset and submit your predictions to Kaggle to see how your model does against unknown data.
-    - **Note**: Kaggle expects to see your submissions in a specific format. Check the challenge's page to make sure you are formatting your CSVs correctly!
-    - **You are limited to models you've learned in class**. In other words, you cannot use XGBoost, Neural Networks or any other advanced model for this project.
-4. Evaluate your models!
-    - consider your evaluation metrics
-    - consider your baseline score
-    - how can your model be used for inference?
-    - why do you believe your model will generalize to new data?
 
-## Submission
+Each features were plotted on a scatter plots to check and remove outliers, like the scatter plots below. 
 
-Materials must be submitted by the beginning of class on **Friday, April 10**.
+![](./images/age_garg_scatter.png)
 
-The last day for the Kaggle competition will be **Friday, April 10**.
 
-Your technical report will be hosted on Github Enterprise. Make sure it includes:
+The datapoint on the left was remove beacause didn't make sense with -200 years old. 
 
-- A README.md (that isn't this file)
-- Jupyter notebook(s) with your analysis and models (renamed to describe your project)
-- At least one successful prediction submission on [DSI-US-11 Regression Challenge](https://www.kaggle.com/c/dsi-us-11-project-2-regression-challenge) --  you should see your name in the "[Leaderboard](https://www.kaggle.com/c/dsi-us-11-project-2-regression-challenge/leaderboard)" tab.
-- Data files
-- Presentation slides
-- Any other necessary files (images, etc.)
+The final step for check for missing values. Since these features were qualitative, it should be a numeric. 
 
-**Check with your local instructor for how they would like you to submit your repo for review.**
+Finding:
 
----
+Features|Total Missing
+|---|---|
+lot_frontage|330
 
-## Presentation Structure
+330 was more than 10% of the total dataset. If it was removed, it can potentially impact model accuracy. Thus, these values were filled with the mean value of its neighborhood. 
 
-- **Must be within time limit established by local instructor.**
-- Use Google Slides or some other visual aid (Keynote, Powerpoint, etc).
-- Consider the audience. **Check with your local instructor for direction**.
-- Start with the **data science problem**.
-- Use visuals that are appropriately scaled and interpretable.
-- Talk about your procedure/methodology (high level).
-- Talk about your primary findings.
-- Make sure you provide **clear recommendations** that follow logically from your analyses and narrative and answer your data science problem.
+#### Quantitative
 
-Be sure to rehearse and time your presentation before class.
+Quantitative consist of total 40 features. Each of these features has its own categorical values which had a influence to the sale price. 
+Since this is categorical value, missing values was possible. First step was to look at the features with most N/A, above 50% and remove them. 
 
----
+![](./images/CateNull_bar.png)
 
-## Rubric
-Your local instructor will evaluate your project (for the most part) using the following criteria.  You should make sure that you consider and/or follow most if not all of the considerations/recommendations outlined below **while** working through your project.
+Total of 5 features were removed. 
 
-**Scores will be out of 27 points based on the 9 items in the rubric.** <br>
-*3 points per section*<br>
+For the remaining features, a box plot was used on each features to show distribution of its categories and filter the features with good price variation, like the chart of neighborhood vs. saleprice.
 
-| Score | Interpretation |
-| --- | --- |
-| **0** | *Project fails to meet the minimum requirements for this item.* |
-| **1** | *Project meets the minimum requirements for this item, but falls significantly short of portfolio-ready expectations.* |
-| **2** | *Project exceeds the minimum requirements for this item, but falls short of portfolio-ready expectations.* |
-| **3** | *Project meets or exceeds portfolio-ready expectations; demonstrates a thorough understanding of every outlined consideration.* |
+![](./images/nei_box.png)
+Wide range of price variation. 
 
-### The Data Science Process
+Final qualitative features:
+Total of 21
 
-**Problem Statement**
-- Is it clear what the student plans to do?
-- What type of model will be developed?
-- How will success be evaluated?
-- Is the scope of the project appropriate?
-- Is it clear who cares about this or why this is important to investigate?
-- Does the student consider the audience and the primary and secondary stakeholders?
+|---|---|---|---|---|
+ms_zoning|street|lot_shape|land_contour|utilities
+condition_2|bldg_type|house_style|roof_matl|mas_vnr_type
+exter_qual|bsmt_qual|bsmt_cond|kitchen_qual|garage_type
+garage_finish|garage_cond|sale_type|neighborhood|exterior_1st
+exterior_2nd| | | |
 
-**Data Cleaning and EDA**
-- Are missing values imputed appropriately?
-- Are distributions examined and described?
-- Are outliers identified and addressed?
-- Are appropriate summary statistics provided?
-- Are steps taken during data cleaning and EDA framed appropriately?
-- Does the student address whether or not they are likely to be able to answer their problem statement with the provided data given what they've discovered during EDA?
 
-**Preprocessing and Modeling**
-- Are categorical variables one-hot encoded?
-- Does the student investigate or manufacture features with linear relationships to the target?
-- Have the data been scaled appropriately?
-- Does the student properly split and/or sample the data for validation/training purposes?
-- Does the student utilize feature selection to remove noisy or multi-collinear features?
-- Does the student test and evaluate a variety of models to identify a production algorithm (**AT MINIMUM:** linear regression, lasso, and ridge)?
-- Does the student defend their choice of production model relevant to the data at hand and the problem?
-- Does the student explain how the model works and evaluate its performance successes/downfalls?
 
-**Evaluation and Conceptual Understanding**
-- Does the student accurately identify and explain the baseline score?
-- Does the student select and use metrics relevant to the problem objective?
-- Is more than one metric utilized in order to better assess performance?
-- Does the student interpret the results of their model for purposes of inference?
-- Is domain knowledge demonstrated when interpreting results?
-- Does the student provide appropriate interpretation with regards to descriptive and inferential statistics?
 
-**Conclusion and Recommendations**
-- Does the student provide appropriate context to connect individual steps back to the overall project?
-- Is it clear how the final recommendations were reached?
-- Are the conclusions/recommendations clearly stated?
-- Does the conclusion answer the original problem statement?
-- Does the student address how findings of this research can be applied for the benefit of stakeholders?
-- Are future steps to move the project forward identified?
+### 2) Data Processing. Linear, Ridge and Lasso Regression 
 
-### Organization and Professionalism
+These two sets features were combined into one dataframe with total of 40 features. 
 
-**Project Organization**
-- Are modules imported correctly (using appropriate aliases)?
-- Are data imported/saved using relative paths?
-- Does the README provide a good executive summary of the project?
-- Is markdown formatting used appropriately to structure notebooks?
-- Are there an appropriate amount of comments to support the code?
-- Are files & directories organized correctly?
-- Are there unnecessary files included?
-- Do files and directories have well-structured, appropriate, consistent names?
+1) Model varible setup:
+    X = 40 features
+    y = saleprice
 
-**Visualizations**
-- Are sufficient visualizations provided?
-- Do plots accurately demonstrate valid relationships?
-- Are plots labeled properly?
-- Are plots interpreted appropriately?
-- Are plots formatted and scaled appropriately for inclusion in a notebook-based technical report?
+2) Each quantitatives features with converted to 1's and 0's with pd.get_dummies function. It resulted in total of 150 features.
 
-**Python Syntax and Control Flow**
-- Is care taken to write human readable code?
-- Is the code syntactically correct (no runtime errors)?
-- Does the code generate desired results (logically correct)?
-- Does the code follows general best practices and style guidelines?
-- Are Pandas functions used appropriately?
-- Are `sklearn` methods used appropriately?
+3) saleprice was log_transformed to get a better distribution for model.
 
-**Presentation**
-- Is the problem statement clearly presented?
-- Does a strong narrative run through the presentation building toward a final conclusion?
-- Are the conclusions/recommendations clearly stated?
-- Is the level of technicality appropriate for the intended audience?
-- Is the student substantially over or under time?
-- Does the student appropriately pace their presentation?
-- Does the student deliver their message with clarity and volume?
-- Are appropriate visualizations generated for the intended audience?
-- Are visualizations necessary and useful for supporting conclusions/explaining findings?
+![](./images/sale_log_hist.png)
 
-In order to pass the project, students must earn a minimum score of 1 for each category.
-- Earning below a 1 in one or more of the above categories would result in a failing project.
-- While a minimum of 1 in each category is the required threshold for graduation, students should aim to earn at least an average of 1.5 across each category. An average score below 1.5, while it may be passing, means students may want to solicit specific feedback in order to significantly improve the project before showcasing it as part of a portfolio or the job search.
+4) X was split into 75/25 for training and testing dataset for check the model prediction. 
 
-### REMEMBER:
+5) model X and y to Linear Regression, Ridge and Lasso for R2 scores on CV5 folds. 
 
-This is a learning environment and you are encouraged to try new things, even if they don't work out as well as you planned! While this rubric outlines what we look for in a _good_ project, it is up to you to go above and beyond to create a _great_ project. **Learn from your failures and you'll be prepared to succeed in the workforce**.
+Result:
+
+CV5_score|Train|Test|Kaggle Score
+|---|---|---|---|
+Linear Regression|0.914|0.856|23.83K
+Ridge|0.954|0.911|23.80K
+LassCV|0.947|0.920|23.28K
+
+The scores from the 3 regression, 2 of which had regularization, were fairly closed with slight overfit. Ridge and LassCV was able to adjust slightly and improved kaggle score by 1% to 2%.
+
+## Conclusion
+
+From the scores, the model is capable to predict house price when it is given information with its 40 features. But, the model is only valid with data from around 2006 to 2010 from Ames of Iowa, or similar economic conditiion similar to 2006-2010. If it is used beyond those conditions, the model will not yield good results and the model will need to be trained again. Thus, in order to improve the current model, it need to get feed with more data, iterate the features in differen ways and convert the categorical values to numeric value more effectively. 
+
+
+
+
