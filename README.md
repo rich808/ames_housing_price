@@ -8,7 +8,7 @@ Given the housing data from 2006 - 2010 for the city of Ames in Iowa, analyze im
 
 ### 1) Data Cleaning
 
-At start, the datasets has total of 81 features. It consist of 38 quantatitve features, 40 qualitative features and 2 identification features given by its local government. Out of the total 81 features, not all 81 will have significant influences to the house price. Thus, it will be filtered to only contain important features. 
+At start, the dataset has total of 81 features. It consist of 38 quantatitve features, 40 qualitative features and 2 identification features given by its local government. Out of the total 81 features, not all 81 will have significant influences to the house price. Thus, it will be filtered to only contain important features. 
 
 [Data Description](http://jse.amstat.org/v19n3/decock/DataDocumentation.txt)
 
@@ -50,8 +50,8 @@ lot_frontage|330
 
 #### Quantitative
 
-Quantitative consist of total 40 features. Each features has its own categorical values which had a influence to the sale price. 
-Since this was categorical value, missing values was possible. First step was to look at the features with most N/A and remove those with 50% or above.
+Quantitative consist of total 40 features. Each features has its own categorical values that can influence to the sale price. 
+Since these were categorical values, missing values was possible. First step was to look at the features with most N/A and remove those with 50% or above.
 
 ![](./images/CateNull_bar.png)
 
