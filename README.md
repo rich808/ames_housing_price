@@ -107,11 +107,11 @@ Linear Regression|0.914|0.856|23.83K
 Ridge|0.954|0.911|23.80K
 LassCV|0.947|0.920|23.28K
 
-The scores from 3 regression, 2 of which had regularization, were fairly closed with slight overfit. Ridge and LassCV was able to slightly adjust and improved kaggle score by 1% to 2%.
+The scores from 3 the regression models, 2 of which with regularization, were fairly close with a slight overfit. Ridge and LassCV were able to slightly adjust the features and improved kaggle score by 1% to 2%.
 
 ## Conclusion
 
-From the scores, the model is capable to predict house price when it is given information with its 40 features. But, the model is only valid with data from around 2006 to 2010 from Ames of Iowa, or similar economic condition to 2006-2010. If it is used beyond these conditions, the model will not yield good results and the model will need to be trained again. Thus, in order to improve the current model, it need to get fed with more data, iterate features in more ways and convert the categorical values to numeric value more effectively. 
+From the scores, the model is capable to predict house price when it is given information with these 40 features. But, the model is only valid with data from around 2006 to 2010 from Ames of Iowa, or with similar economic condition data of 2006-2010. If it is used beyond these conditions, the model will not yield good results and the model will need to be trained again. Thus, in order to improve the current model, it will need more data, iterate the features in more ways and convert the categorical values to numeric value more effectively, such as using PCA. 
 
 
 
